@@ -2,10 +2,8 @@ import json
 
 
 def load_data(path):
-    with open(path, "r") as f:
-        data = json.loads(f.read())
+    data = json.load(open(path, "r", encoding="utf8"))
     return data
-
 
 def get_biggest_bar(data):
     pass
@@ -21,4 +19,4 @@ def get_closest_bar(data, longitude, latitude):
 
 if __name__ == '__main__':
     p = "bars.json"
-    data = load_data(p)
+    print(load_data(p))
