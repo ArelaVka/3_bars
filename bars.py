@@ -25,7 +25,14 @@ def get_smallest_bar(data):
 
 
 def get_closest_bar(data, longitude, latitude):
-    pass
+    min_distance = 1000
+    for i in data['features']:
+        distance = ((float(i['geometry']['coordinates'][0]) - longitude) ** 2 +
+                        (float(i['geometry']['coordinates'][1]) - latitude) ** 2) ** (1/2)
+        if distance < min_distance:
+            min_distance = distance
+            closest_bar_name = i['properties']['Attributes']['Name']
+    print("name of closest bar - ", closest_bar_name)
 
 
 if __name__ == '__main__':
@@ -33,3 +40,6 @@ if __name__ == '__main__':
     #print(load_data(p))
     get_biggest_bar(load_data(p))
     get_smallest_bar(load_data(p))
+    longitude = float (input("Insert longitude: "))
+    latitude = float(input("Insert latitude: "))
+    get_closest_bar(load_data(p), longitude, latitude)
