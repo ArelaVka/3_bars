@@ -7,12 +7,21 @@ def load_data(path):
 
 
 def get_biggest_bar(data):
+    bb=0
     for i in data['features']:
-        print(i['properties']['Attributes']['SeatsCount'])
+        if bb <= i['properties']['Attributes']['SeatsCount']:
+            bb = i['properties']['Attributes']['SeatsCount']
+            name_of_biggest_bar = i['properties']['Attributes']['Name']
+    print("max seats bar = ", name_of_biggest_bar, " (num of seats - ", bb, ")")
 
 
 def get_smallest_bar(data):
-    pass
+    sb=0
+    for i in data['features']:
+        if sb >= i['properties']['Attributes']['SeatsCount']:
+            sb = i['properties']['Attributes']['SeatsCount']
+            name_of_smallest_bar = i['properties']['Attributes']['Name']
+    print("min seats bar = ", name_of_smallest_bar, " (num of seats - ", sb, ")")
 
 
 def get_closest_bar(data, longitude, latitude):
@@ -21,5 +30,6 @@ def get_closest_bar(data, longitude, latitude):
 
 if __name__ == '__main__':
     p = "bars.json"
-    print(load_data(p))
+    #print(load_data(p))
     get_biggest_bar(load_data(p))
+    get_smallest_bar(load_data(p))
