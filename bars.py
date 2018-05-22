@@ -35,13 +35,17 @@ def get_smallest_bar(input_data):
 
 def get_closest_bar(input_data, longitude, latitude):
     min_distance = 1000
-    for current_record in input_data["features"]:
-        distance = ((float(current_record["geometry"]["coordinates"][0]) - longitude) ** 2 +
-                    (float(current_record["geometry"]["coordinates"][1]) - latitude) ** 2) ** (1 / 2)
-        if distance < min_distance:
-            min_distance = distance
-            closest_bar_name = current_record["properties"]["Attributes"]["Name"]
-    return closest_bar_name
+    closest_bar_data = min(input_data["features"],
+                           key=lambda x: ((float(x["geometry"]["coordinates"][0]) - float(longitude)) ** 2
+                                          + (float(x["geometry"]["coordinates"][1]) - float(latitude)) ** 2
+                                          ) ** (1 / 2))
+    # for current_record in input_data["features"]:
+    # distance = ((float(current_record["geometry"]["coordinates"][0]) - longitude) ** 2 +
+    #            (float(current_record["geometry"]["coordinates"][1]) - latitude) ** 2) ** (1 / 2)
+    # if distance < min_distance:
+    # min_distance = distance
+    # closest_bar_name = current_record["properties"]["Attributes"]["Name"]
+    return closest_bar_data["properties"]["Attributes"]["Name"]
 
 
 if __name__ == "__main__":
@@ -57,7 +61,6 @@ if __name__ == "__main__":
             while not is_number(current_y_coord):
                 current_y_coord = input("Please insert correct latitude: ")
             else:
-                print("The closest bar is ", get_closest_bar(load_data(path_to_file), float(current_x_coord),
-                                                             float(current_y_coord)))
+                print("The closest bar is ", get_closest_bar(load_data(path_to_file), current_x_coord, current_y_coord))
     else:
         print("Your input file is incorrect")
