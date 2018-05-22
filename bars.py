@@ -9,6 +9,14 @@ def is_number(input_data):
         return False
 
 
+def is_json(input_data):
+    try:
+        json.load(open(input_data, "r", encoding="utf8"))
+        return True
+    except ValueError:
+        return False
+
+
 def load_data(file_path):
     with open(file_path, "r", encoding="utf8") as f:
         all_bars_data = json.load(f)
@@ -38,15 +46,18 @@ def get_closest_bar(input_data, longitude, latitude):
 
 if __name__ == "__main__":
     path_to_file = "bars.json"
-    print("The biggest bar is ", get_biggest_bar(load_data(path_to_file)))
-    print("The smallest bar is ", get_smallest_bar(load_data(path_to_file)))
-    current_x_coord = input("Insert longitude: ")
-    while not is_number(current_x_coord):
-        current_x_coord = input("Please insert correct longitude: ")
-    else:
-        current_y_coord = input("Insert latitude: ")
-        while not is_number(current_y_coord):
-            current_y_coord = input("Please insert correct latitude: ")
+    if is_json(path_to_file):
+        print("The biggest bar is ", get_biggest_bar(load_data(path_to_file)))
+        print("The smallest bar is ", get_smallest_bar(load_data(path_to_file)))
+        current_x_coord = input("Insert longitude: ")
+        while not is_number(current_x_coord):
+            current_x_coord = input("Please insert correct longitude: ")
         else:
-            print("The closest bar is ", get_closest_bar(load_data(path_to_file), float(current_x_coord),
-                                                         float(current_y_coord)))
+            current_y_coord = input("Insert latitude: ")
+            while not is_number(current_y_coord):
+                current_y_coord = input("Please insert correct latitude: ")
+            else:
+                print("The closest bar is ", get_closest_bar(load_data(path_to_file), float(current_x_coord),
+                                                             float(current_y_coord)))
+    else:
+        print("Your input file is incorrect")

@@ -18,11 +18,12 @@
 ```bash
 
 $ python bars.py # possibly requires call of python3 executive instead of just python
-max seats bar =  Спорт бар «Красная машина»  (num of seats -  450 )
-min seats bar =  Бар в Деловом центре Яуза  (num of seats -  0 )
-Insert longitude: 5
-Insert latitude: 10
-name of closest bar -  Staropramen
+The biggest bar is  Спорт бар «Красная машина»
+The smallest bar is  БАР. СОКИ
+Insert longitude: 4
+Insert latitude: a
+Please insert correct latitude: 1
+The closest bar is  Staropramen
 
 ```
 
