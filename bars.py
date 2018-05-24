@@ -18,8 +18,8 @@ def is_json(input_data):
 
 
 def load_data(file_path):
-    with open(file_path, "r", encoding="utf8") as f:
-        all_bars_data = json.load(f)
+    with open(file_path, "r", encoding="utf8") as json_file:
+        all_bars_data = json.load(json_file)
     return all_bars_data
 
 
