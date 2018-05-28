@@ -1,4 +1,6 @@
 import json
+import sys
+import os
 
 
 def is_number(input_data):
@@ -9,7 +11,7 @@ def is_number(input_data):
         return False
 
 
-def open_json(path_to_file):
+def load_json_data(path_to_file):
     try:
         with open(path_to_file, "r", encoding="utf8") as opened_file:
             json_data = json.load(opened_file)
@@ -35,38 +37,31 @@ def get_smallest_bar(bars):
 def get_closest_bar(bars, longitude, latitude):
     closest_bar_data = min(
         bars,
-        key=lambda x: ((float(x["geometry"]["coordinates"][0]) -
-                        (longitude))**2 +
-                       (float(x["geometry"]["coordinates"][1]) -
-                        (latitude))**2)**(1/2))
+        key=lambda x: (
+            (float(x["geometry"]["coordinates"][0]) - (longitude))**2 +
+            (float(x["geometry"]["coordinates"][1]) - (latitude))**2)**(1/2))
     return closest_bar_data
 
 
-'''
-Комментарий про сделать if короче не понял.
-Как ни крути, содержимое if не изменится в объемах.
-Можно немного подробнее описать рекомендации.
-'''
+def get_bar_name(bar_data):
+    return bar_data["properties"]["Attributes"]["Name"]
+
 
 if __name__ == "__main__":
-    input_path = input("Enter path: ")
-    if open_json(input_path):
-        print(
-            "The biggest bar is ",
-            get_biggest_bar(open_json(input_path))
-            ["properties"]["Attributes"]["Name"])
+    if len(sys.argv) > 1 and os.path.exists(sys.argv[1]):
+        input_data = load_json_data(sys.argv[1])
+        print("The biggest bar is ",
+              get_bar_name(get_biggest_bar(input_data)))
         print("The smallest bar is ",
-              get_smallest_bar(open_json(input_path))
-              ["properties"]["Attributes"]["Name"])
+              get_bar_name(get_smallest_bar(input_data)))
         current_x_coord = is_number(input("Insert longitude: "))
         current_y_coord = is_number(input("Insert latitude: "))
-        if is_number(current_x_coord) and is_number(current_y_coord):
-            print("The closest bar is ",
-                  get_closest_bar(open_json(input_path),
-                                  current_x_coord,
-                                  current_y_coord)
-                  ["properties"]["Attributes"]["Name"])
+        if current_x_coord and current_y_coord:
+            print("The closest bar is ", get_bar_name(
+            	get_closest_bar(input_data, current_x_coord, current_y_coord)
+            	)
+            )
         else:
-            exit("you must enter numbers!")
+            sys.exit("You must enter numbers!")
     else:
-        print("Your input file or path is incorrect")
+        sys.exit("Your input file or path is incorrect")
