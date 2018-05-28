@@ -3,12 +3,12 @@ import sys
 import os
 
 
-def is_number(input_data):
+def get_number(input_coord):
     try:
-        float_input_data = float(input_data)
-        return float_input_data
+        float_input_coord = float(input_coord)
+        return float_input_coord
     except ValueError:
-        return False
+        return None
 
 
 def load_json_data(path_to_file):
@@ -17,7 +17,7 @@ def load_json_data(path_to_file):
             json_data = json.load(opened_file)
         return json_data["features"]
     except ValueError:
-        return False
+        return None
 
 
 def get_biggest_bar(bars):
@@ -50,18 +50,17 @@ def get_bar_name(bar_data):
 if __name__ == "__main__":
     if len(sys.argv) > 1 and os.path.exists(sys.argv[1]):
         input_data = load_json_data(sys.argv[1])
-        print("The biggest bar is ",
-              get_bar_name(get_biggest_bar(input_data)))
-        print("The smallest bar is ",
-              get_bar_name(get_smallest_bar(input_data)))
-        current_x_coord = is_number(input("Insert longitude: "))
-        current_y_coord = is_number(input("Insert latitude: "))
-        if current_x_coord and current_y_coord:
-            print("The closest bar is ", get_bar_name(
-            	get_closest_bar(input_data, current_x_coord, current_y_coord)
-            	)
-            )
-        else:
-            sys.exit("You must enter numbers!")
     else:
-        sys.exit("Your input file or path is incorrect")
+    	sys.exit("Your path is incorrect")
+    if input_data:
+       	print("The biggest bar is ", get_bar_name(get_biggest_bar(input_data)))
+        print("The smallest bar is ", get_bar_name(get_smallest_bar(input_data)))
+        current_x_coord = get_number(input("Insert longitude: "))
+        current_y_coord = get_number(input("Insert latitude: "))
+        if current_x_coord and current_y_coord:
+        	print("The closest bar is ", get_bar_name(
+        		get_closest_bar(input_data, current_x_coord, current_y_coord))  	)
+        else:
+        	sys.exit("You must enter numbers!")
+    else:
+    	sys.exit("Your input file is not correct json")
