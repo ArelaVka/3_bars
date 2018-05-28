@@ -59,7 +59,7 @@ if __name__ == "__main__":
         current_y_coord = get_number(input("Insert latitude: "))
         if current_x_coord and current_y_coord:
         	print("The closest bar is ", get_bar_name(
-        		get_closest_bar(input_data, current_x_coord, current_y_coord))  	)
+        		get_closest_bar(input_data, current_x_coord, current_y_coord)))
         else:
         	sys.exit("You must enter numbers!")
     else:
