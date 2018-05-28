@@ -15,21 +15,16 @@
 
 Скрипт требует для своей работы установленного интерпретатора Python версии 3.5
 
-Запуск на Linux:
+Запуск (на Windows):
+```cmd
+C:\> C:\Python\python.exe C:\3_bars\bars.py C:\3_bars\bars.json
 
-```bash
-
-$ python bars.py # possibly requires call of python3 executive instead of just python
-The biggest bar is  Спорт бар «Красная машина»
+The biggest bar is  Спорт бар <Красная машина>
 The smallest bar is  БАР. СОКИ
-Insert longitude: 4
-Insert latitude: a
-Please insert correct latitude: 1
-The closest bar is  Staropramen
-
+Insert longitude: 56
+Insert latitude: 57
+The closest bar is  Таверна
 ```
-
-Запуск на Windows происходит аналогично.
 
 # Цели проекта
 
